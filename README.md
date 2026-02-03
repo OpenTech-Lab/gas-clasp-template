@@ -25,7 +25,7 @@ clasp login
 - Visit [https://script.google.com/home/usersettings](https://script.google.com/home/usersettings)
 - Enable the Google Apps Script API. Wait a few minutes for it to propagate.
 
-![Enable Apps Script API Settings](./images/google_apps_script_api_on.png)
+![Enable Apps Script API Settings](./docs/google_apps_script_api_on.png)
 
 ### 4. Create a New Apps Script Project
 ```bash
