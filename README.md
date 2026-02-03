@@ -36,12 +36,16 @@ clasp create --title "Sample Script"
   - `appsscript.json` (project manifest)
 
 ### 5. Add Sample Code
-- Create `Code.gs` with a sample function:
+- Create `Code.gs` with the main function:
 ```javascript
 function myFunction() {
   Logger.log('Hello, World! This is a sample Apps Script function.');
   return 'Sample output';
 }
+```
+- Create `Triggers.gs` with trigger management functions:
+```javascript
+// Functions for managing time-driven triggers
 
 // Function to set up a time-driven trigger (run this once to schedule myFunction)
 function createTrigger() {
@@ -49,6 +53,16 @@ function createTrigger() {
     .timeBased()
     .everyHours(1)  // Runs every hour; customize as needed
     .create();
+}
+
+// Function to delete the time-driven trigger for myFunction
+function deleteTrigger() {
+  var triggers = ScriptApp.getProjectTriggers();
+  for (var i = 0; i < triggers.length; i++) {
+    if (triggers[i].getHandlerFunction() == 'myFunction') {
+      ScriptApp.deleteTrigger(triggers[i]);
+    }
+  }
 }
 ```
 
@@ -88,11 +102,13 @@ clasp open-script
 - **Edit Locally**: Modify `.gs` files, then `clasp push` to sync.
 - **Pull Changes**: `clasp pull` to download from Google Drive.
 - **Run Functions**: `clasp run <functionName>` (requires API deployment).
+- **Disable Trigger**: Run `deleteTrigger` in the Apps Script editor to remove the scheduled trigger.
 - **View Logs**: `clasp logs` or check in the editor.
 - **Deploy**: `clasp version "Description"` then `clasp deploy`.
 
 ## Notes
 
+- Code is organized into separate files: `Code.gs` for main logic and `Triggers.gs` for trigger management.
 - The sample `myFunction` runs every hour via the trigger.
 - Customize the trigger interval in `createTrigger` (e.g., `.everyMinutes(30)`).
 - For more details, see the [Clasp documentation](https://developers.google.com/apps-script/guides/clasp).
